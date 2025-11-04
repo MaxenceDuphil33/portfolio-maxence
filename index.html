@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Barre de navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#accueil" class="logo" aria-label="Arts et Métiers">
+                <!-- Remplacez l'extension si nécessaire (ex: .svg, .jpg) -->
+                <img src="../documents/Logo.png" alt="Arts et Métiers">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#apropos">Qui je suis ?</a></li>
+                <li><a href="#competences">Valorisation</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#missions">Fiches mission</a></li>
+                <li><a href="#annexes">Annexes</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Héros avec diaporama -->
+    <section id="accueil" class="hero">
+        <div class="hero-slideshow">
+            <div class="slide active" style="background-image: url('Photo/PNG-JPG/entrepo.jpg');"></div>
+            <div class="slide" style="background-image: url('Photo/PNG-JPG/Facade.jpg');"></div>
+            <div class="slide" style="background-image: url('Photo/PNG-JPG/Campus.jpg');"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">Maxence DUPHIL</h1>
+                <h2 class="fade-in">Étudiant en Ingénierie</h2>
+                <p class="fade-in">Élève en 2ème année de bachelor ENSAM</p>
+                <div class="hero-buttons fade-in">
+                    <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+                    <a href="#contact" class="btn btn-primary">Me contacter</a>
+                    <a href="Document/fiche de cadrage stage BA2.pdf" target="_blank" class="btn btn-primary">Fiche de cadrage</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section À propos -->
+    <section id="apropos" class="about">
+        <div class="container">
+            <h2 class="section-title">Qui je suis ?</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Je m’appelle Maxence DUPHIL, je suis actuellement en deuxième année de Bachelor aux Arts et Métiers de Bordeaux Talence (ENSAM).</p>
+                    <p>Pour commencer, l’intérêt que j’ai pour le secteur technique et industriel vient d’une passion familiale pour le nautisme. Depuis tout jeune, j’ai eu la chance de faire de nombreux voyages en voilier, ce qui m’a permis de comprendre le fonctionnement d’un bateau, d’apprendre les termes du milieu nautique et de développer une véritable curiosité pour la mécanique et l’innovation. Cette passion s’est étendue à d’autres domaines comme l’automobile et l’aéronautique, où l’on retrouve le même goût pour la précision, la technique et la performance.</p>
+                    <p>D’autre part, j’ai pu renforcer cet intérêt par mes expériences professionnelles. Lors de mon stage de 3ᵉ au sein du groupe Honotel, j’ai découvert le fonctionnement d’une entreprise et appris à m’intégrer dans un environnement professionnel. Mon stage ouvrier chez la SAS Les Tchanqués m’a permis de développer mes compétences manuelles, ma capacité d’adaptation et le sens du travail d’équipe, dans un cadre concret et exigeant.</p>
+                    <p>Enfin, au cours de mes études aux Arts et Métiers, j’ai eu l’opportunité de participer à plusieurs projets techniques, notamment la réalisation d’un robot autonome et d’une serre automatisée. Ces projets m’ont permis de combiner mes compétences en mécanique, électronique et programmation, tout en travaillant en groupe et en gérant des contraintes réelles de conception. J’aime particulièrement cette approche polyvalente, où l’on passe de la réflexion à la fabrication, du code à la pratique.</p>
+                    <p>En résumé, je suis un étudiant curieux, motivé et polyvalent, qui aime apprendre en expérimentant. Je n’ai pas encore de projet professionnel arrêté, mais je souhaite continuer à explorer les domaines du nautisme, de l’automobile et de l’aéronautique, dans lesquels je pourrais associer innovation, technique et passion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Tableau de valorisation d'expérience -->
+    <section id="competences" class="skills">
+        <div class="competence-bg">
+            <div class="competence-bg-item"></div>
+            <div class="competence-bg-item"></div>
+            <div class="competence-bg-item"></div>
+        </div>
+        <div class="container">
+            <h2 class="section-title">Tableau de valorisation d'expérience</h2>
+            <div class="table-responsive">
+                <table class="valuation-table">
+                    <thead>
+                        <tr>
+                            <th>Activité</th>
+                            <th>Savoirs</th>
+                            <th>SAVOIR-FAIRE</th>
+                            <th>SAVOIR-ETRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Stage Ouvrier</td>
+                            <td>Notions de fabrication, sécurité en atelier, organisation du travail</td>
+                            <td>Utiliser des outils manuels et machines, suivre des consignes techniques, s'intégrer à une équipe</td>
+                            <td>Adaptabilité, rigueur, esprit d'équipe</td>
+                        </tr>
+                        <tr>
+                            <td>Stage Honotel</td>
+                            <td>Découverte du fonctionnement d'une entreprise et de la relation client</td>
+                            <td>Observer, écouter, réaliser de petites tâches de soutien logistique ou administrative</td>
+                            <td>Curiosité, autonomie, respect des consignes</td>
+                        </tr>
+                        <tr>
+                            <td>Stage Global partner</td>
+                            <td>Compréhension du fonctionnement global d'une entreprise. Bases techniques sur les outils et matériels utilisés.</td>
+                            <td>S'adapter à des missions variées selon les besoins du service. Collaborer efficacement avec une équipe.</td>
+                            <td>Esprit d'équipe et sens du relationnel. Curiosité et volonté d'apprendre. Capacité d'adaptation et autonomie.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Projets -->
+    <section id="projets" class="projects">
+        <div class="container">
+            <h2 class="section-title">Mes Projets Techniques</h2>
+            <div class="projects-grid">
+                <!-- Projet 1 -->
+                <div class="project-card bg-cover" style="background-image: url('Photo/serre-autonome.webp');">
+                    <div class="project-info">
+                        <h3>Serre autonome</h3>
+                        <div class="mission-description">
+                            <p>Pour mon projet de fin d'année de terminale, nous avons conçu et réalisé une serre autonome capable de réguler automatiquement la température, l'humidité (air et sol), la ventilation et l'éclairage.</p>
+                            <p>Nous étions une équipe de cinq élèves, chacun responsable d'une spécialité : base de données, ventilation, arrosage, lumière et aération. Ensemble, nous avons configuré les capteurs et programmé ventilateurs, vérins, vannes électroniques, LED et un écran tactile afin de suivre en temps réel les informations de la serre et les données extérieures. Vous pouvez voir des photos du système d'aération dans la section <a href="#annexes" class="text-link">Annexes</a>.</p>
+                            <p>Ce projet nous a permis de développer nos compétences en électronique, programmation et gestion de projet, tout en apprenant à travailler efficacement en équipe sur un système complet et autonome.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Projet 2 -->
+                <div class="project-card bg-cover" style="background-image: url('Photo/chute_libre_332127_1_1ce7.webp');">
+                    <div class="project-info">
+                        <h3>Système de chute libre</h3>
+                        <div class="mission-description">
+                            <p>Conception d'un dispositif de mesure et d'analyse de la chute libre, comprenant l'acquisition de données, leur traitement et leur visualisation.</p>
+                            <p>Ce projet a impliqué la mise en place de capteurs de mouvement, l'analyse des données en temps réel et la création d'une interface utilisateur pour visualiser les résultats. J'ai développé des compétences en traitement du signal et en programmation Python pour l'analyse des données.</p>
+                            <p>Le système permet d'étudier les lois de la physique en temps réel et d'observer les effets de la résistance de l'air sur un objet en chute libre.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Projet 3 - Toulouse Robot Race -->
+                <div class="project-card bg-cover trr-card" style="background-image: url('Photo/PNG-JPG/ToulouseRR.JPG');">
+                    <div class="project-info">
+                        <h3>Toulouse Robot Race (TRR)</h3>
+                        <div class="mission-description">
+                            <p>Pour mon projet de fin d'année de terminale, j'ai participé à la conception et à la programmation d'un robot autonome pour la compétition Toulouse Robot Race (TRR).</p>
+                            <p>Notre équipe a développé un robot capable de suivre une ligne noire, d'éviter des obstacles et d'effectuer des manœuvres précises sur un parcours semé d'embûches. J'étais principalement responsable de la programmation du système de détection de ligne et de la gestion des capteurs infrarouges.</p>
+                            <p>La conception mécanique du robot a été optimisée pour la stabilité et la réactivité, avec une attention particulière portée à la répartition des masses et à la précision des capteurs. Vous pouvez voir des photos du robot dans la section <a href="#annexes" class="text-link">Annexes</a>.</p>
+                            <p>Ce projet m'a permis d'acquérir des compétences en programmation embarquée, en traitement du signal des capteurs et en travail d'équipe pour résoudre des problèmes techniques complexes sous pression.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Fiches mission -->
+    <section id="missions" class="projects">
+        <div class="container">
+            <h2 class="section-title">Fiches mission</h2>
+            <div class="projects-grid">
+                <div class="project-card bg-cover" style="background-image: url('Photo/PNG-JPG/SAS Tchanque.png');">
+                    <div class="project-info">
+                        <h3 onclick="openPdfModal('fiche%20mission/Fiche%20Mission%20SAS.pdf')" style="cursor: pointer;">Stage exécutant en maintenance</h3>
+                    </div>
+                </div>
+                <div class="project-card bg-cover" style="background-image: url('Photo/PNG-JPG/Portail voiture.png');">
+                    <div class="project-info">
+                        <h3 onclick="openPdfModal('fiche%20mission/Fiche%20Mission%20PORTAIL.pdf')" style="cursor: pointer;">Réparation portail automatique</h3>
+                    </div>
+                </div>
+                <div class="project-card bg-cover" style="background-image: url('Photo/PNG-JPG/IDEX.webp');">
+                    <div class="project-info">
+                        <h3 onclick="openPdfModal('fiche%20mission/Fiche%20Mission%20IDEX.pdf')" style="cursor: pointer;">Stage IDEX</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .project-card {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Style pour la modale PDF */
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+        
+        .pdf-modal-content {
+            margin: 5% auto;
+            width: 90%;
+            max-width: 900px;
+            height: 90%;
+            position: relative;
+        }
+        
+        .pdf-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .pdf-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+    
+    <!-- Modale pour afficher le PDF -->
+    <div id="pdfModal" class="pdf-modal">
+        <span class="pdf-close" onclick="closePdfModal()">&times;</span>
+        <div class="pdf-modal-content">
+            <iframe id="pdfViewer" class="pdf-iframe" src=""></iframe>
+        </div>
+    </div>
+    
+    <script>
+        function openPdfModal(pdfUrl) {
+            document.getElementById('pdfViewer').src = pdfUrl;
+            document.getElementById('pdfModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closePdfModal() {
+            document.getElementById('pdfModal').style.display = 'none';
+            document.getElementById('pdfViewer').src = '';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Fermer la modale en cliquant en dehors du contenu
+        window.onclick = function(event) {
+            const modal = document.getElementById('pdfModal');
+            if (event.target === modal) {
+                closePdfModal();
+            }
+        };
+    </script>
+
+    <!-- Section Annexes Unifiée -->
+    <section id="annexes" class="annexes">
+        <div class="container">
+            <h2 class="section-title">Annexes</h2>
+            
+            <div class="annex-category">
+                <div class="annexes-grid">
+                    <div class="annex-item">
+                        <h4>Toulouse Robot Race (TRR)</h4>
+                        <div class="annex-gallery">
+                            <figure>
+                                <img src="Photo/PNG-JPG/conception voiture.png" alt="Conception de la voiture robot" class="lightbox-image">
+                                <figcaption>Conception de la voiture robot</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="Photo/PNG-JPG/voiture robot.png" alt="Voiture robot terminée" class="lightbox-image">
+                                <figcaption>Voiture robot terminée</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    
+                    <div class="annex-item">
+                        <h4>Serre autonome</h4>
+                        <div class="annex-gallery">
+                            <figure>
+                                <img src="Photo/PNG-JPG/Système d'aération.jpg" alt="Système d'aération" class="lightbox-image">
+                                <figcaption>Système d'aération</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="annex-category">
+                <div class="annexes-grid">
+                    <div class="annex-item">
+                        <h4>Stage exécutant en maintenance</h4>
+                        <div class="annex-gallery">
+                            <figure>
+                                <img src="Photo/PNG-JPG/Ligne production chips.png" alt="Lignes de production" class="lightbox-image">
+                                <figcaption>Lignes de production de chips</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="Photo/PNG-JPG/Plaquette.png" alt="Plaquette entreprise" class="lightbox-image">
+                                <figcaption>Plaquette de présentation</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="Photo/PNG-JPG/Tableau information.png" alt="Tableau d'information" class="lightbox-image">
+                                <figcaption>Tableau d'information</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    
+                    <div class="annex-item">
+                        <h4>Réparation portail automatique</h4>
+                        <div class="annex-gallery">
+                            <figure>
+                                <img src="Photo/PNG-JPG/Soudure portail.jpg" alt="Détail de la soudure" class="lightbox-image">
+                                <figcaption>Détail de la réparation</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="Photo/PNG-JPG/Fusible.jpg" alt="Fusible du portail" class="lightbox-image">
+                                <figcaption>Fusible défectueux</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="Photo/PNG-JPG/Baguette.jpg" alt="Baguette de portail" class="lightbox-image">
+                                <figcaption>Baguette de guidage</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    
+                    <div class="annex-item">
+                        <h4>Stage IDEX</h4>
+                        <div class="annex-gallery">
+                            <figure>
+                                <img src="Photo/PNG-JPG/Générateur bio masse.png" alt="Générateur biomasse" class="lightbox-image">
+                                <figcaption>Générateur biomasse</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="Photo/PNG-JPG/Système filtration miroir d'eau.png" alt="Système de filtration" class="lightbox-image">
+                                <figcaption>Système de filtration</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="Photo/PNG-JPG/Remplacement buse.png" alt="Remplacement des buses" class="lightbox-image">
+                                <figcaption>Remplacement des buses</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Coordonnées</h3>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:maxence.duphil@ecole-hexagone.com">maxence.duphil@ecole-hexagone.com</a></p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+33648051254">06 48 05 12 54</a></p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/maxence-duphil-75927232b/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                    <div class="download-buttons">
+                        <a href="cv/Maxence_DUPHIL_CV.pdf" class="btn btn-secondary" download>Télécharger mon CV</a>
+                        <a href="Document/LM_CNB_MaxenceDUPHIL 2026.pdf" class="btn btn-secondary" download>Télécharger ma lettre de motivation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Entreprises -->
+    <section id="entreprises" class="entreprises">
+        <div class="container">
+            <h2 class="section-title">Entreprises</h2>
+            <div class="entreprises-grid">
+                <!-- Carte Honotel -->
+                <div class="entreprise-card">
+                    <div class="entreprise-logo">
+                        <img src="Photo/PNG-JPG/honotel.jpg" alt="Logo Honotel">
+                    </div>
+                    <h3>Honotel</h3>
+                    <p>Groupe hôtelier français spécialisé dans la gestion et l'exploitation d'hôtels 3 et 4 étoiles en France et en Europe.</p>
+                    <a href="https://www.honotel.com/" target="_blank" class="btn btn-small">Visiter le site</a>
+                </div>
+
+                <!-- Carte Global Partner -->
+                <div class="entreprise-card">
+                    <div class="entreprise-logo">
+                        <img src="Photo/PNG-JPG/Global partner.jpg" alt="Logo Global Partner">
+                    </div>
+                    <h3>Global Partner</h3>
+                    <p>Entreprise spécialisée dans les solutions innovantes pour l'industrie et les services.</p>
+                    <a href="https://www.global-partner.fr/" target="_blank" class="btn btn-small">Visiter le site</a>
+                </div>
+
+                <!-- Carte SAS Tchanqué -->
+                <div class="entreprise-card">
+                    <div class="entreprise-logo">
+                        <img src="Photo/PNG-JPG/SAS Tchanque.png" alt="Logo SAS Tchanqué">
+                    </div>
+                    <h3>SAS Tchanqué</h3>
+                    <p>Entreprise artisanale spécialisée dans la fabrication de produits de qualité, notamment des chips et cacahuètes haut de gamme.</p>
+                    <a href="https://xn--tchanqu-chips-hhb.fr/" target="_blank" class="btn btn-small">Visiter le site</a>
+                </div>
+
+                <!-- Carte IDEX -->
+                <div class="entreprise-card">
+                    <div class="entreprise-logo">
+                        <img src="Photo/PNG-JPG/IDEX.webp" alt="Logo IDEX">
+                    </div>
+                    <h3>IDEX</h3>
+                    <p>IDEX est un groupe international spécialisé dans les services à l'énergie et à l'environnement, proposant des solutions innovantes pour la performance énergétique et environnementale des bâtiments et des industries.</p>
+                    <a href="https://www.idex.fr/" target="_blank" class="btn btn-small">Visiter le site</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Maxence DUPHIL. Tous droits réservés.</p>
+                <div class="footer-links">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox pour les images -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
