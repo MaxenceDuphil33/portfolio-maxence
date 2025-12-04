@@ -199,69 +199,76 @@
         </div>
     </section>
 
-    <script>
-        // Données des annexes par mission
-        const annexesParMission = {
-            'fiche_mission_sas.pdf': {
-                titre: 'Stage exécutant en maintenance',
-                images: [
-                    {src: 'Photo/PNG-JPG/Ligne production chips.png', alt: 'Ligne de production de chips', legende: 'Lignes de production de chips'},
-                    {src: 'Photo/PNG-JPG/Plaquette.png', alt: 'Plaquette entreprise', legende: 'Plaquette de présentation'},
-                    {src: 'Photo/PNG-JPG/Tableau information.png', alt: 'Tableau d\'information', legende: 'Tableau d\'information'}
-                ]
-            },
-            'fiche_mission_portail.pdf': {
-                titre: 'Réparation portail automatique',
-                images: [
-                    {src: 'Photo/PNG-JPG/Soudure portail.jpg', alt: 'Détail de la soudure', legende: 'Détail de la réparation'},
-                    {src: 'Photo/PNG-JPG/Fusible.jpg', alt: 'Fusible du portail', legende: 'Fusible défectueux'},
-                    {src: 'Photo/PNG-JPG/Baguette.jpg', alt: 'Baguette de portail', legende: 'Baguette de guidage'}
-                ]
-            },
-            'fiche_mission_idex.pdf': {
-                titre: 'Stage IDEX',
-                images: [
-                    {src: 'Photo/PNG-JPG/Générateur bio masse.png', alt: 'Générateur biomasse', legende: 'Générateur biomasse'},
-                    {src: 'Photo/PNG-JPG/Système filtration miroir d\'eau.png', alt: 'Système de filtration', legende: 'Système de filtration'},
-                    {src: 'Photo/PNG-JPG/Remplacement buse.png', alt: 'Remplacement des buses', legende: 'Remplacement des buses'}
-                ]
-            }
-        };
+    <style>
+        .project-card {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
+        /* Style pour la modale PDF */
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+
+        .pdf-modal-content {
+            margin: 5% auto;
+            width: 90%;
+            max-width: 900px;
+            height: 90%;
+            position: relative;
+        }
+
+        .pdf-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .pdf-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+
+    <!-- Modale pour afficher le PDF -->
+    <div id="pdfModal" class="pdf-modal">
+        <span class="pdf-close" onclick="closePdfModal()">&times;</span>
+        <div class="pdf-modal-content">
+            <iframe id="pdfViewer" class="pdf-iframe" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
         function openPdfModal(pdfUrl) {
-            // Afficher la modale unifiée
             document.getElementById('pdfViewer').src = pdfUrl;
             document.getElementById('pdfModal').style.display = 'block';
-            
-            // Préparer et afficher les annexes
-            const nomFichier = pdfUrl.split('/').pop();
-            const annexes = annexesParMission[nomFichier];
-            
-            if (annexes) {
-                document.getElementById('annexesTitle').textContent = `Annexes - ${annexes.titre}`;
-                const gallery = document.getElementById('annexesGallery');
-                gallery.innerHTML = '';
-                
-                annexes.images.forEach(img => {
-                    const figure = document.createElement('figure');
-                    figure.className = 'annex-figure';
-                    figure.innerHTML = `
-                        <img src="${img.src}" alt="${img.alt}" class="lightbox-image">
-                        <figcaption>${img.legende}</figcaption>
-                    `;
-                    gallery.appendChild(figure);
-                });
-            }
-            
             document.body.style.overflow = 'hidden';
         }
-        
+
         function closePdfModal() {
             document.getElementById('pdfModal').style.display = 'none';
             document.getElementById('pdfViewer').src = '';
             document.body.style.overflow = 'auto';
         }
-        
+
         // Fermer la modale en cliquant en dehors du contenu
         window.onclick = function(event) {
             const modal = document.getElementById('pdfModal');
@@ -270,22 +277,6 @@
             }
         };
     </script>
-
-    <!-- Modale unifiée pour afficher le PDF et les annexes -->
-    <div id="pdfModal" class="pdf-modal">
-        <span class="pdf-close" onclick="closePdfModal()">&times;</span>
-        <div class="pdf-modal-content">
-            <div class="pdf-container">
-                <iframe id="pdfViewer" class="pdf-iframe" src=""></iframe>
-            </div>
-            <div class="annexes-section">
-                <h3 id="annexesTitle">Annexes</h3>
-                <div id="annexesGallery" class="annexes-gallery">
-                    <!-- Les images des annexes seront ajoutées ici dynamiquement -->
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Section Annexes Unifiée -->
     <section id="annexes" class="annexes">
