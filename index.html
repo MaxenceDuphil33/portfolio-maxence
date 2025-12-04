@@ -169,27 +169,52 @@
         <div class="container">
             <h2 class="section-title">Fiches mission</h2>
             <div class="projects-grid">
+                
                 <div class="project-card bg-cover" 
-                     style="background-image: url('Photo/PNG-JPG/SAS Tchanque.png');"
-                     onclick="openPdfModal('Fiche mission/fiche_mission_sas.pdf', 'Stage exécutant en maintenance')">
+                     style="background-image: url('Photo/PNG-JPG/SAS Tchanque.png');">
                     <div class="project-info">
                         <h3>Stage exécutant en maintenance</h3>
+                        <div class="mission-buttons">
+                            <button class="btn btn-small" 
+                                    onclick="openPdfModal('Fiche mission/fiche_mission_sas.pdf', 'Stage exécutant en maintenance')">
+                                Voir la mission
+                            </button>
+                            <a href="#annexes" class="btn btn-small btn-secondary">
+                                Voir les annexes
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="project-card bg-cover" 
-                     style="background-image: url('Photo/PNG-JPG/Portail voiture.png');"
-                     onclick="openPdfModal('Fiche mission/fiche_mission_portail.pdf', 'Réparation portail automatique')">
+                     style="background-image: url('Photo/PNG-JPG/Portail voiture.png');">
                     <div class="project-info">
                         <h3>Réparation portail automatique</h3>
+                        <div class="mission-buttons">
+                            <button class="btn btn-small"
+                                    onclick="openPdfModal('Fiche mission/fiche_mission_portail.pdf', 'Réparation portail automatique')">
+                                Voir la mission
+                            </button>
+                            <a href="#annexes" class="btn btn-small btn-secondary">
+                                Voir les annexes
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="project-card bg-cover" 
-                     style="background-image: url('Photo/PNG-JPG/IDEX.webp');"
-                     onclick="openPdfModal('Fiche mission/fiche_mission_idex.pdf', 'Stage IDEX')">
+                     style="background-image: url('Photo/PNG-JPG/IDEX.webp');">
                     <div class="project-info">
                         <h3>Stage IDEX</h3>
+                        <div class="mission-buttons">
+                            <button class="btn btn-small"
+                                    onclick="openPdfModal('Fiche mission/fiche_mission_idex.pdf', 'Stage IDEX')">
+                                Voir la mission
+                            </button>
+                            <a href="#annexes" class="btn btn-small btn-secondary">
+                                Voir les annexes
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,12 +223,33 @@
 
     <style>
         .project-card {
-            cursor: pointer;
+            /* J'ai supprimé 'cursor: pointer' sur la carte entière car le clic est maintenant sur les boutons */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .project-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Nouveaux styles pour les boutons dans la carte de mission */
+        .mission-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
         }
 
         /* NOUVEAUX STYLES POUR LA MODALE UNIFIÉE (PDF + Annexes) */
