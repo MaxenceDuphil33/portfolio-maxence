@@ -48,7 +48,6 @@ const missionAnnexes = {
         { src: "Photo/PNG-JPG/Système filtration miroir d'eau.png", caption: "Système de filtration" },
         { src: "Photo/PNG-JPG/Remplacement buse.png", caption: "Remplacement des buses" }
     ],
-    // Vous pouvez ajouter d'autres missions ici si besoin, avec un tableau vide s'il n'y a pas d'annexe
 };
 
 function openPdfModal(pdfUrl, missionTitle) {
