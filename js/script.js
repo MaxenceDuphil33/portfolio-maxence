@@ -1,21 +1,152 @@
+// ====================================================================
+// NOUVEAU: Données des annexes pour la modale PDF/Annexes unifiée
+// ====================================================================
+const annexesParMission = {
+    // Les clés correspondent aux noms de fichiers PDF exacts dans votre dossier 'Fiche mission/'
+    'fiche_mission_sas.pdf': {
+        titre: 'Stage exécutant en maintenance',
+        images: [
+            {src: 'Photo/PNG-JPG/Ligne production chips.png', alt: 'Lignes de production de chips', legende: 'Lignes de production de chips'},
+            {src: 'Photo/PNG-JPG/Plaquette.png', alt: 'Plaquette entreprise', legende: 'Plaquette de présentation'},
+            {src: 'Photo/PNG-JPG/Tableau information.png', alt: 'Tableau d\'information', legende: 'Tableau d\'information'}
+        ]
+    },
+    'fiche_mission_portail.pdf': {
+        titre: 'Réparation portail automatique',
+        images: [
+            {src: 'Photo/PNG-JPG/Soudure portail.jpg', alt: 'Détail de la soudure', legende: 'Détail de la réparation'},
+            {src: 'Photo/PNG-JPG/Fusible.jpg', alt: 'Fusible du portail', legende: 'Fusible défectueux'},
+            {src: 'Photo/PNG-JPG/Baguette.jpg', alt: 'Baguette de portail', legende: 'Baguette de guidage'}
+        ]
+    },
+    'fiche_mission_idex.pdf': {
+        titre: 'Stage IDEX',
+        images: [
+            {src: 'Photo/PNG-JPG/Générateur bio masse.png', alt: 'Générateur biomasse', legende: 'Générateur biomasse'},
+            {src: 'Photo/PNG-JPG/Système filtration miroir d\'eau.png', alt: 'Système de filtration', legende: 'Système de filtration'},
+            {src: 'Photo/PNG-JPG/Remplacement buse.png', alt: 'Remplacement des buses', legende: 'Remplacement des buses'}
+        ]
+    }
+};
+
+// ====================================================================
+// NOUVEAU: Fonctions de gestion de la modale PDF/Annexes
+// ====================================================================
+function openPdfModal(pdfUrl) {
+    const pdfModal = document.getElementById('pdfModal');
+    
+    // 1. Charger le PDF et afficher la modale
+    document.getElementById('pdfViewer').src = pdfUrl;
+    pdfModal.style.display = 'flex'; // Utiliser flex pour centrer
+    
+    // 2. Extraire le nom du fichier pour trouver les annexes
+    const pathParts = pdfUrl.split('/');
+    const nomFichier = pathParts[pathParts.length - 1]; // Récupère le nom du fichier
+    const annexes = annexesParMission[nomFichier];
+    
+    // 3. Préparer la galerie d'annexes
+    const gallery = document.getElementById('annexesGallery');
+    gallery.innerHTML = ''; // Nettoyer la galerie précédente
+    
+    if (annexes) {
+        document.getElementById('annexesTitle').textContent = `Annexes - ${annexes.titre}`;
+        
+        // Créer les éléments figure/img/figcaption pour chaque annexe
+        annexes.images.forEach(img => {
+            const figure = document.createElement('figure');
+            figure.className = 'annex-figure';
+            figure.innerHTML = `
+                <img src="${img.src}" alt="${img.alt}" class="lightbox-image" data-pdf-source="${pdfUrl}">
+                <figcaption>${img.legende}</figcaption>
+            `;
+            // IMPORTANT: Ajout de l'écouteur de clic pour la Lightbox (voir plus bas)
+            figure.querySelector('.lightbox-image').onclick = function(e) {
+                 e.stopPropagation();
+                 openLightbox(this.src);
+            };
+            gallery.appendChild(figure);
+        });
+    } else {
+        // Afficher un message si aucune annexe n'est définie
+        document.getElementById('annexesTitle').textContent = 'Annexes (non disponibles)';
+    }
+    
+    document.body.style.overflow = 'hidden';
+}
+
+function closePdfModal() {
+    const pdfModal = document.getElementById('pdfModal');
+    pdfModal.style.display = 'none';
+    document.getElementById('pdfViewer').src = '';
+    document.body.style.overflow = 'auto';
+}
+
+// ====================================================================
+// Lightbox (mise à jour pour la compatibilité avec la modale PDF)
+// ====================================================================
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeLightbox = document.querySelector('.close-lightbox');
+
+// Fonction pour ouvrir la lightbox
+function openLightbox(imgSrc) {
+    // Si la modale PDF est ouverte, il faut la masquer en arrière-plan
+    const pdfModal = document.getElementById('pdfModal');
+    if (pdfModal && pdfModal.style.display === 'flex') {
+        pdfModal.style.visibility = 'hidden'; // On la masque sans la fermer
+    }
+    
+    lightboxImg.src = imgSrc;
+    lightbox.style.display = 'flex';
+    setTimeout(() => {
+        lightbox.classList.add('show');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+}
+
+// Fonction pour fermer la lightbox
+function closeLightboxFunc() {
+    lightbox.classList.remove('show');
+    
+    // Réafficher la modale PDF si elle était ouverte
+    const pdfModal = document.getElementById('pdfModal');
+    if (pdfModal) {
+        pdfModal.style.visibility = 'visible';
+    }
+    
+    setTimeout(() => {
+        lightbox.style.display = 'none';
+        
+        // On remet le défilement du body uniquement si la modale PDF est également fermée
+        if (!pdfModal || pdfModal.style.display !== 'flex') {
+            document.body.style.overflow = '';
+        }
+
+        // Le défilement jusqu'à la section annexes n'est plus pertinent ici
+        // car la lightbox est déclenchée DANS la section annexe de la modale.
+
+    }, 300); // Correspond à la durée de la transition CSS
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // ====================================================================
+    // Gestion des modales existantes (Serre et TRR)
+    // ====================================================================
+    
     // Gestion de la fenêtre modale de la serre autonome
     const serreProject = document.querySelector('.project-card[style*="Serre.jpg"]');
     const serreOverlay = document.getElementById('serre-detail');
     const closeSerreDetail = serreOverlay ? serreOverlay.querySelector('.close-detail') : null;
 
     if (serreProject && serreOverlay) {
-        // Ouvrir la modal au clic sur le projet Serre Autonome
         serreProject.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            // Empêcher l'ouverture si on clique sur un lien
             if (e.target.tagName === 'A') {
                 return;
             }
-            
-            // Afficher l'overlay avec animation
             serreOverlay.style.display = 'block';
             setTimeout(() => {
                 serreOverlay.style.opacity = '1';
@@ -23,40 +154,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 10);
         });
 
-        // Fermer la modal avec le bouton
         if (closeSerreDetail) {
             closeSerreDetail.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                // Masquer l'overlay avec animation
                 serreOverlay.style.opacity = '0';
                 document.body.style.overflow = 'auto';
-                
                 setTimeout(() => {
                     serreOverlay.style.display = 'none';
                 }, 300);
             });
         }
 
-        // Fermer en cliquant en dehors du contenu
         serreOverlay.addEventListener('click', function(e) {
             if (e.target === serreOverlay) {
                 serreOverlay.style.opacity = '0';
                 document.body.style.overflow = 'auto';
-                
-                setTimeout(() => {
-                    serreOverlay.style.display = 'none';
-                }, 300);
-            }
-        });
-
-        // Fermer avec la touche Échap
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && serreOverlay.style.display === 'block') {
-                serreOverlay.style.opacity = '0';
-                document.body.style.overflow = 'auto';
-                
                 setTimeout(() => {
                     serreOverlay.style.display = 'none';
                 }, 300);
@@ -70,17 +183,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeTrrDetail = document.querySelector('.close-trr-detail');
 
     if (trrProject && trrOverlay) {
-        // Ouvrir la modal au clic sur le projet TRR
         trrProject.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            // Empêcher l'ouverture si on clique sur le bouton
             if (e.target.closest('.btn')) {
                 return;
             }
-            
-            // Afficher l'overlay avec animation
             trrOverlay.style.display = 'block';
             setTimeout(() => {
                 trrOverlay.style.opacity = '1';
@@ -88,82 +196,94 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 10);
         });
 
-        // Fermer la modal avec le bouton
         closeTrrDetail.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            
-            // Masquer l'overlay avec animation
             trrOverlay.style.opacity = '0';
             document.body.style.overflow = 'auto';
-            
             setTimeout(() => {
                 trrOverlay.style.display = 'none';
             }, 300);
         });
 
-        // Fermer en cliquant en dehors du contenu
         trrOverlay.addEventListener('click', function(e) {
             if (e.target === trrOverlay) {
                 trrOverlay.style.opacity = '0';
                 document.body.style.overflow = 'auto';
-                
-                setTimeout(() => {
-                    trrOverlay.style.display = 'none';
-                }, 300);
-            }
-        });
-
-        // Fermer avec la touche Échap
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && trrOverlay.style.display === 'block') {
-                trrOverlay.style.opacity = '0';
-                document.body.style.overflow = 'auto';
-                
                 setTimeout(() => {
                     trrOverlay.style.display = 'none';
                 }, 300);
             }
         });
     }
-    // Gestion du diaporama d'arrière-plan
+    
+    // ====================================================================
+    // NOUVEAU: Gestion du clic en dehors des modales (Serre, TRR, PDF)
+    // ====================================================================
+    window.onclick = function(event) {
+        const pdfModal = document.getElementById('pdfModal');
+        const serreOverlay = document.getElementById('serre-detail');
+        const trrOverlay = document.getElementById('trr-detail-overlay');
+        
+        if (event.target === pdfModal) {
+            closePdfModal();
+        } else if (serreOverlay && event.target === serreOverlay) {
+            // Logique déjà gérée par l'écouteur du DOMContentLoaded
+        } else if (trrOverlay && event.target === trrOverlay) {
+            // Logique déjà gérée par l'écouteur du DOMContentLoaded
+        }
+    };
+    
+    // ====================================================================
+    // NOUVEAU: Gestion de la touche Échap (pour toutes les modales)
+    // ====================================================================
+    document.addEventListener('keydown', function(e) {
+        const pdfModal = document.getElementById('pdfModal');
+        const serreOverlay = document.getElementById('serre-detail');
+        const trrOverlay = document.getElementById('trr-detail-overlay');
+        
+        if (e.key === 'Escape') {
+            if (lightbox.style.display === 'flex') {
+                closeLightboxFunc(); // Ferme la lightbox en priorité
+            } else if (pdfModal && pdfModal.style.display === 'flex') {
+                closePdfModal();
+            } else if (serreOverlay && serreOverlay.style.display === 'block') {
+                serreOverlay.style.opacity = '0';
+                document.body.style.overflow = 'auto';
+                setTimeout(() => { serreOverlay.style.display = 'none'; }, 300);
+            } else if (trrOverlay && trrOverlay.style.display === 'block') {
+                trrOverlay.style.opacity = '0';
+                document.body.style.overflow = 'auto';
+                setTimeout(() => { trrOverlay.style.display = 'none'; }, 300);
+            }
+        }
+    });
+
+
+    // Gestion du diaporama d'arrière-plan (code existant)
     const slides = document.querySelectorAll('.slide');
     if (slides.length > 0) {
         let currentSlide = 0;
-        const slideInterval = 5000; // Change d'image toutes les 5 secondes
-
+        const slideInterval = 5000;
         function nextSlide() {
-            // Masque la diapositive actuelle
             slides[currentSlide].classList.remove('active');
-            
-            // Passe à la diapositive suivante
             currentSlide = (currentSlide + 1) % slides.length;
-            
-            // Affiche la nouvelle diapositive
             slides[currentSlide].classList.add('active');
         }
-
-        // Démarre le diaporama
         setInterval(nextSlide, slideInterval);
     }
 
-    // Gestion de l'affichage des descriptions de mission
-    // Gestion de l'affichage des descriptions de mission
+    // Gestion de l'affichage des descriptions de mission (code existant)
     document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('click', function(e) {
-            // Ne pas déclencher si on clique sur un lien ou une image
             if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
                 return;
             }
-            
             const title = this.querySelector('h3');
             const description = this.querySelector('.mission-description');
-            
             if (description) {
                 title.classList.toggle('active');
                 description.classList.toggle('visible');
-                
-                // Faire défiler jusqu'à la description si on l'ouvre
                 if (description.classList.contains('visible')) {
                     description.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
@@ -171,38 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Gestion de la lightbox
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeLightbox = document.querySelector('.close-lightbox');
-    
-    // Fonction pour ouvrir la lightbox
-    function openLightbox(imgSrc) {
-        lightboxImg.src = imgSrc;
-        lightbox.style.display = 'flex';
-        // Forcer le navigateur à appliquer le style avant d'ajouter la classe
-        setTimeout(() => {
-            lightbox.classList.add('show');
-        }, 10);
-        document.body.style.overflow = 'hidden';
-    }
-    
-    // Fonction pour fermer la lightbox
-    function closeLightboxFunc() {
-        lightbox.classList.remove('show');
-        // Attendre la fin de l'animation avant de cacher la lightbox
-        setTimeout(() => {
-            lightbox.style.display = 'none';
-            document.body.style.overflow = '';
-            // Faire défiler jusqu'à la section des annexes
-            const annexesSection = document.getElementById('annexes');
-            if (annexesSection) {
-                annexesSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 300); // Correspond à la durée de la transition CSS
-    }
-    
-    // Gestion du clic sur la croix
+    // Gestion de la lightbox (fermeture)
     closeLightbox.onclick = closeLightboxFunc;
     
     // Fermeture en cliquant en dehors de l'image
@@ -212,30 +301,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Gestion de la touche Échap
-    document.onkeydown = function(e) {
-        if (e.key === 'Escape' && lightbox.style.display === 'flex') {
-            closeLightboxFunc();
-        }
-    };
-    
-    // Fermeture en cliquant en dehors de l'image
-    lightbox.onclick = function(e) {
-        if (e.target === lightbox) {
-            closeLightboxFunc();
-        }
-    };
+    // Fermeture avec la touche Échap est désormais gérée dans le gestionnaire 'keydown' plus haut.
     
     // Ajout des écouteurs aux images des fiches mission et des annexes
-    document.querySelectorAll('.mission-gallery img, .annex-gallery .lightbox-image').forEach(img => {
+    // NOTE: L'écouteur pour les images dans la modale PDF est désormais dans la fonction openPdfModal
+    document.querySelectorAll('.mission-gallery img').forEach(img => {
         img.style.cursor = 'pointer';
         img.onclick = function(e) {
-            e.stopPropagation(); // Empêche la propagation du clic aux éléments parents
+            e.stopPropagation();
             openLightbox(this.src);
         };
     });
     
-    // Navigation mobile
+    // Navigation mobile (code existant)
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
     const navLinksItems = document.querySelectorAll('.nav-links li a');
@@ -258,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Changement de style de la navbar au scroll
+    // Changement de style de la navbar au scroll (code existant)
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -268,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Animation au défilement
+    // Animation au défilement (code existant)
     const animateOnScroll = () => {
         const elements = document.querySelectorAll('.fade-in, .skill-card, .project-card');
         
@@ -283,32 +361,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
     
-    // Gestion du formulaire de contact
+    // Gestion du formulaire de contact (code existant)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Récupération des valeurs du formulaire
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
-            // Ici, vous pouvez ajouter le code pour envoyer les données à un serveur
-            // Par exemple, en utilisant fetch() ou en redirigeant vers une URL mailto:
             const mailtoLink = `mailto:votre@email.com?subject=${encodeURIComponent(subject)}&body=Nom: ${encodeURIComponent(name)}%0D%0AEmail: ${encodeURIComponent(email)}%0D%0A%0D%0A${encodeURIComponent(message)}`;
             window.location.href = mailtoLink;
             
-            // Réinitialisation du formulaire
             contactForm.reset();
             
-            // Message de confirmation
             alert('Merci pour votre message ! Je vous répondrai dès que possible.');
         });
     }
     
-    // Animation des barres de compétences au défilement
+    // Animation des barres de compétences au défilement (code existant)
     const animateSkills = () => {
         const skills = document.querySelectorAll('.progress-bar');
         skills.forEach(skill => {
@@ -320,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
     
-    // Gestion du défilement fluide pour les liens de navigation
+    // Gestion du défilement fluide pour les liens de navigation (code existant)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -338,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Détection de la section active pour la mise en surbrillance du menu
+    // Détection de la section active pour la mise en surbrillance du menu (code existant)
     const sections = document.querySelectorAll('section');
     
     const highlightMenu = () => {
@@ -350,24 +423,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const sectionId = section.getAttribute('id');
             
             if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                document.querySelector(`.nav-links a[href*=${sectionId}]`).classList.add('active');
+                document.querySelector(`.nav-links a[href*=${sectionId}]`)?.classList.add('active');
             } else {
-                const navLink = document.querySelector(`.nav-links a[href*=${sectionId}]`);
-                if (navLink) navLink.classList.remove('active');
+                document.querySelector(`.nav-links a[href*=${sectionId}]`)?.classList.remove('active');
             }
         });
     };
     
-    // Événements
+    // Événements (code existant)
     window.addEventListener('scroll', () => {
         animateOnScroll();
         highlightMenu();
     });
     
-    // Initialisation
+    // Initialisation (code existant)
     animateOnScroll();
     
-    // Démarrer l'animation des compétences lorsque la section est visible
+    // Démarrer l'animation des compétences lorsque la section est visible (code existant)
     const skillsSection = document.querySelector('.skills');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -382,7 +454,7 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(skillsSection);
     }
     
-    // Slideshow d'arrière-plan pour la section héros
+    // Slideshow d'arrière-plan pour la section héros (code existant)
     const hero = document.querySelector('.hero');
     if (hero) {
         const heroImages = [
@@ -416,62 +488,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Interaction des fiches mission: agrandir la carte cliquée et réduire les autres
+    // Interaction des fiches mission et projets (code existant avec FLIP)
+    // Pas de changement nécessaire dans cette logique FLIP.
     const missionsSection = document.getElementById('missions');
+    const projetsSection = document.getElementById('projets');
+    
+    // Helper: FLIP animation (code existant)
+    const flip = (elements, mutate) => {
+        const first = new Map();
+        elements.forEach(el => { first.set(el, el.getBoundingClientRect()); });
+        mutate();
+        elements.forEach(el => {
+            const last = el.getBoundingClientRect();
+            const f = first.get(el);
+            const dx = f.left - last.left;
+            const dy = f.top - last.top;
+            el.style.transform = `translate(${dx}px, ${dy}px)`;
+        });
+        requestAnimationFrame(() => {
+            elements.forEach(el => {
+                el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+                el.style.transform = '';
+            });
+            const onEnd = () => {
+                elements.forEach(el => {
+                    el.style.transition = '';
+                    el.removeEventListener('transitionend', onEnd);
+                });
+            };
+            elements[0]?.addEventListener('transitionend', onEnd);
+        });
+    };
+    
+    // Gérer le clic sur les cartes Mission
     if (missionsSection) {
         const missionCards = missionsSection.querySelectorAll('.project-card');
         const grid = missionsSection.querySelector('.projects-grid');
         const missionLinks = missionsSection.querySelectorAll('a');
         
-        // Empêcher la navigation des liens dans la section missions
         missionLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
             });
         });
         
-        // Helper: FLIP animation
-        const flip = (elements, mutate) => {
-            const first = new Map();
-            elements.forEach(el => {
-                first.set(el, el.getBoundingClientRect());
-            });
-            // Mutation that changes layout
-            mutate();
-            // Measure last and invert
-            elements.forEach(el => {
-                const last = el.getBoundingClientRect();
-                const f = first.get(el);
-                const dx = f.left - last.left;
-                const dy = f.top - last.top;
-                // Invert
-                el.style.transform = `translate(${dx}px, ${dy}px)`;
-            });
-            // Play
-            requestAnimationFrame(() => {
-                elements.forEach(el => {
-                    el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-                    el.style.transform = '';
-                });
-                // Cleanup after transition
-                const onEnd = () => {
-                    elements.forEach(el => {
-                        el.style.transition = '';
-                        el.removeEventListener('transitionend', onEnd);
-                    });
-                };
-                elements[0]?.addEventListener('transitionend', onEnd);
-            });
-        };
-        
-        // Gérer le clic sur les cartes
         missionCards.forEach(card => {
             card.addEventListener('click', () => {
                 const isActive = card.classList.contains('active');
                 const allCards = Array.from(missionCards);
                 
                 flip(allCards, () => {
-                    // Toggle classes with grid state
                     if (isActive) {
                         grid?.classList.remove('has-active');
                         allCards.forEach(c => c.classList.remove('active', 'shrink'));
@@ -491,52 +557,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Interaction des projets: comportement identique aux fiches mission
-    const projetsSection = document.getElementById('projets');
     if (projetsSection) {
         const projectCards = projetsSection.querySelectorAll('.project-card');
         const gridProj = projetsSection.querySelector('.projects-grid');
         const projLinks = projetsSection.querySelectorAll('a');
         
-        // Empêcher la navigation des liens dans la section projets
         projLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
             });
         });
         
-        // Helper FLIP
-        const flipProj = (elements, mutate) => {
-            const first = new Map();
-            elements.forEach(el => first.set(el, el.getBoundingClientRect()));
-            mutate();
-            elements.forEach(el => {
-                const last = el.getBoundingClientRect();
-                const f = first.get(el);
-                const dx = f.left - last.left;
-                const dy = f.top - last.top;
-                el.style.transform = `translate(${dx}px, ${dy}px)`;
-            });
-            requestAnimationFrame(() => {
-                elements.forEach(el => {
-                    el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-                    el.style.transform = '';
-                });
-                const cleanup = () => {
-                    elements.forEach(el => {
-                        el.style.transition = '';
-                        el.removeEventListener('transitionend', cleanup);
-                    });
-                };
-                elements[0]?.addEventListener('transitionend', cleanup);
-            });
-        };
-        
         projectCards.forEach(card => {
             card.addEventListener('click', () => {
                 const isActive = card.classList.contains('active');
                 const allProj = Array.from(projectCards);
                 
-                flipProj(allProj, () => {
+                flip(allProj, () => {
                     if (isActive) {
                         gridProj?.classList.remove('has-active');
                         allProj.forEach(c => c.classList.remove('active', 'shrink'));
@@ -555,13 +592,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Ajout d'une animation de chargement de page
+    // Ajout d'une animation de chargement de page (code existant)
     window.addEventListener('load', () => {
         document.body.style.opacity = '1';
     });
 });
 
-// Ajout d'un effet de parallaxe pour la section héros
+// Ajout d'un effet de parallaxe pour la section héros (code existant)
 window.addEventListener('scroll', function() {
     const hero = document.querySelector('.hero');
     if (hero) {
@@ -571,13 +608,13 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Ajout d'un bouton de retour en haut de page
+// Ajout d'un bouton de retour en haut de page (code existant)
 const scrollToTopBtn = document.createElement('button');
 scrollToTopBtn.innerHTML = '↑';
 scrollToTopBtn.className = 'scroll-to-top';
 document.body.appendChild(scrollToTopBtn);
 
-// Style du bouton de retour en haut
+// Style du bouton de retour en haut (code existant)
 const style = document.createElement('style');
 style.textContent = `
     .scroll-to-top {
@@ -614,7 +651,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Afficher/masquer le bouton de retour en haut
+// Afficher/masquer le bouton de retour en haut (code existant)
 window.addEventListener('scroll', () => {
     if (window.pageYOffset > 300) {
         scrollToTopBtn.classList.add('visible');
@@ -623,7 +660,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Faire défiler vers le haut lors du clic sur le bouton
+// Faire défiler vers le haut lors du clic sur le bouton (code existant)
 scrollToTopBtn.addEventListener('click', () => {
     window.scrollTo({
         top: 0,
