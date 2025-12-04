@@ -200,53 +200,115 @@
     </section>
 
     <style>
-        .project-card {
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
+        .project-card {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
-        /* Style pour la modale PDF */
-        .pdf-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            overflow: auto;
-        }
+        /* NOUVEAUX STYLES POUR LA MODALE UNIFIÉE (PDF + Annexes) */
+        .pdf-modal {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Ajout de ces lignes pour un meilleur centrage */
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+        }
+        
+        .pdf-modal[style*="display: block"] {
+            display: flex !important; /* Force le flexbox lorsque le JS affiche la modale */
+        }
 
-        .pdf-modal-content {
-            margin: 5% auto;
-            width: 90%;
-            max-width: 900px;
-            height: 90%;
-            position: relative;
-        }
+        .pdf-modal-content {
+            /* Utilise Flexbox pour aligner le PDF et les Annexes */
+            display: flex; 
+            gap: 20px; /* Espace entre les deux colonnes */
+            height: 90%; 
+            max-width: 1200px; /* Augmenter la largeur pour accommoder les deux sections */
+            width: 90%; /* S'assurer qu'il s'adapte bien */
+            /* Retirer le margin: 5% auto; car flexbox gère le centrage */
+            background-color: #fff; /* Fond blanc pour le contenu */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
 
-        .pdf-close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .pdf-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1001; /* Doit être au-dessus de tout */
+        }
 
-        .pdf-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 4px;
-        }
-    </style>
+        .pdf-container {
+            flex: 2; /* Prend les 2/3 de l'espace */
+            height: 100%;
+        }
+        
+        .pdf-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .annexes-section {
+            flex: 1; /* Prend 1/3 de l'espace */
+            padding-left: 20px;
+            border-left: 1px solid #eee;
+            overflow-y: auto; /* Permet de faire défiler les annexes si la liste est longue */
+        }
+        
+        #annexesTitle {
+            color: #333;
+            /* Remplacez 'var(--primary-color, #007bff)' par la couleur de votre choix si non définie ailleurs */
+            border-bottom: 2px solid #007bff; 
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .annexes-gallery {
+            display: grid;
+            gap: 15px;
+        }
+
+        .annex-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+            cursor: pointer; /* Indique qu'on peut cliquer pour la lightbox */
+            transition: transform 0.2s;
+        }
+
+        .annex-figure img:hover {
+            transform: scale(1.02);
+        }
+
+        .annex-figure figcaption {
+            font-size: 0.8em;
+            text-align: center;
+            color: #555;
+            margin-top: 5px;
+        }
+    </style>
 
     <!-- Modale pour afficher le PDF -->
     <div id="pdfModal" class="pdf-modal">
@@ -255,28 +317,6 @@
             <iframe id="pdfViewer" class="pdf-iframe" src=""></iframe>
         </div>
     </div>
-
-    <script>
-        function openPdfModal(pdfUrl) {
-            document.getElementById('pdfViewer').src = pdfUrl;
-            document.getElementById('pdfModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePdfModal() {
-            document.getElementById('pdfModal').style.display = 'none';
-            document.getElementById('pdfViewer').src = '';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Fermer la modale en cliquant en dehors du contenu
-        window.onclick = function(event) {
-            const modal = document.getElementById('pdfModal');
-            if (event.target === modal) {
-                closePdfModal();
-            }
-        };
-    </script>
 
     <!-- Section Annexes Unifiée -->
     <section id="annexes" class="annexes">
